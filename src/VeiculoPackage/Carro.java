@@ -21,12 +21,12 @@ public class Carro {
     @Override
     public String toString() {
         return  "|---------------------------------------|\n" +
-                "| ID do Carro: " + this.id + "\t\t\t|\n" + 
-                "| Cor do Carro: " + this.cor_carro +   "\t\t\t|\n" +
-                "| Tipo de Veículo: " + this.tipo_veiculo +   "\t\t|\n" +
                 "| ID da Estação: " + this.id_estacao +   "\t\t|\n" +
                 "| ID do Funcionário: " + this.id_funcionario +   "\t|\n" +
+                "| ID do Carro: " + this.id + "\t\t\t|\n" + 
                 "| Posição de Fabricação: " + this.posicao_fabricacao +   "\t\t|\n" +
+                "| Cor do Carro: " + this.cor_carro +   "\t\t\t|\n" +
+                "| Tipo de Veículo: " + this.tipo_veiculo +   "\t\t|\n" +
                 "|---------------------------------------|";
     }
 
