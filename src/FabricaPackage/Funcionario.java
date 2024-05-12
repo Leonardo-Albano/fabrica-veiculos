@@ -50,7 +50,8 @@ public class Funcionario {
 
         Carro carro = new Carro(id_carro, cor_carro, tipo_veiculo, this.estacao_id, this.id, posicao_fabricacao);
         carros_produzidos.incrementarContador();
-        // Thread.sleep(1000);
+        Random random = new Random();
+        Thread.sleep(random.nextInt(10000 - 5000 + 1) + 5000);
 
         this.ferramenta_esquerda.release();
         this.ferramenta_direita.release();

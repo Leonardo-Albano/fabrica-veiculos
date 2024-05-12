@@ -1,6 +1,5 @@
 package FabricaPackage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -25,7 +24,7 @@ public class Estacao {
     public Estacao(String id, String fabrica_id, Semaphore esteira_pecas, ContadorDeCarros carros_produzidos, List<Carro> armazem_carros, Semaphore armazem_carros_sem) {
         this.id = id;
         this.fabrica_id = fabrica_id;
-        
+
         ferramenta_1 = new Semaphore(1);
         ferramenta_2 = new Semaphore(1);
         ferramenta_3 = new Semaphore(1);
@@ -40,13 +39,66 @@ public class Estacao {
     }
 
 
-    public void produzirCarros() throws InterruptedException{
-        while (true) {
-            funcionario_1.produzir();
-            funcionario_2.produzir();
-            funcionario_3.produzir();
-            funcionario_4.produzir();
-            funcionario_5.produzir();
-        }
+    public void produzirCarros() throws InterruptedException {
+        Thread thread1 = new Thread(() -> {
+            while (true) {
+                try {
+                    funcionario_1.produzir();
+                    Thread.sleep(1000); // Adjust sleep time as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        
+        Thread thread2 = new Thread(() -> {
+            while (true) {
+                try {
+                    funcionario_2.produzir();
+                    Thread.sleep(1000); // Adjust sleep time as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread thread3 = new Thread(() -> {
+            while (true) {
+                try {
+                    funcionario_3.produzir();
+                    Thread.sleep(1000); // Adjust sleep time as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread thread4 = new Thread(() -> {
+            while (true) {
+                try {
+                    funcionario_4.produzir();
+                    Thread.sleep(1000); // Adjust sleep time as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread thread5 = new Thread(() -> {
+            while (true) {
+                try {
+                    funcionario_5.produzir();
+                    Thread.sleep(1000); // Adjust sleep time as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+        thread5.start();
     }
 }
