@@ -1,53 +1,54 @@
 package ConexaoPackage;
 
+import java.io.*;
 import java.net.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
-import FabricaPackage.Fabrica;
+import Loja.Loja;
 import VeiculoPackage.Carro;
 
-import java.io.*;
+public class Conexao implements Runnable {
 
-public class Conexao {
-    // initialize socket and input stream
-    private Socket socket = null;
-    private ServerSocket server = null;
-    private DataInputStream in = null;
+    private String ip;
+    private Loja loja;
+    private int porta;
 
-    public Conexao(int port, Fabrica fabrica) {
-        // starts server and waits for a connection
+    public Conexao(String ip, int porta, Loja loja) {
+        this.ip = ip;
+        this.porta = porta;
+        this.loja = loja;
+    }
+
+    public void Conectar(String enderecoServidor, int porta, Loja loja) {
         try {
-            server = new ServerSocket(port);
-            System.out.println("Server started");
-            System.out.println("Waiting for a client ...");
-            socket = server.accept();
-            System.out.println("Client accepted");
-            
-            // takes input from the client socket
-            while (true) {
-                
-                in = new DataInputStream(
-                    new BufferedInputStream(socket.getInputStream()));
-                    String line = "";
-                    // reads message from client until "Over" is sent
-                    while (!line.equals("vender_veiculo")) {
-                        try {
-                            line = in.readUTF();
-                            // System.out.println(line);
-                            Carro carro = fabrica.venderVeiculo();
-                            System.out.println("\n\n\n" + carro.toString() + "\n\n\n");
-                            
-                        } catch (IOException i) {
-                            System.out.println(i);
-                        }
-                    }
-                    
-                    System.out.println("Closing connection");
-                    // close connection
-                    // socket.close();
-                    // in.close();
+            try (// Conexão com o servidor
+                    Socket socket = new Socket(enderecoServidor, porta)) {
+                System.out.println("Conectado ao servidor.");
+
+                // Streams de entrada e saída para comunicação com o servidor
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+
+                while (true) {
+                    out.writeUTF("Olá, servidor!");
+                    System.out.print("\n enviado \n");
+                    this.loja.comprarVeiculo();
+
+                    Gson gson = new Gson();
+                    Carro response = gson.fromJson(in.readUTF(), Carro.class);
+
+                    System.out.println(response.toString());
+                    Thread.sleep(3000);
+                }
             }
-        } catch (IOException i) {
-            System.out.println(i);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public void run() {
+        this.Conectar(this.ip, this.porta, this.loja);
     }
 }
