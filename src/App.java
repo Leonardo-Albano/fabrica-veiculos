@@ -1,6 +1,6 @@
 import java.util.concurrent.Semaphore;
 
-import ConexaoPackage.Conexao;
+import ConexaoPackage.Servidor;
 import FabricaPackage.*;
 
 public class App {
@@ -20,15 +20,18 @@ public class App {
         Esteira esteira_4 = new Esteira(esteira_4_sem);
         
         Fabrica fabrica = new Fabrica("Fábrica 1", esteira_1_sem, esteira_2_sem, esteira_3_sem, esteira_4_sem);
-        // Conexao conexao = new Conexao(5000, fabrica);
+        Servidor servidor = new Servidor(fabrica, 5000);
 
         Thread thread_fabrica_1 = new Thread(fabrica);
-
+        Thread thread_servidor = new Thread(servidor);
+        
         Thread thread_esteira_1 = new Thread(esteira_1);
         Thread thread_esteira_2 = new Thread(esteira_2);
         Thread thread_esteira_3 = new Thread(esteira_3);
         Thread thread_esteira_4 = new Thread(esteira_4);
-
+        
+        
+        thread_servidor.start();
         thread_fabrica_1.start();
         thread_esteira_1.start();
         thread_esteira_2.start();

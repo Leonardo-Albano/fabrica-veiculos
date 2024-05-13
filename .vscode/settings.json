@@ -3,6 +3,10 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
+<<<<<<< HEAD
         "c:\\Users\\autologon\\Downloads\\gson-2.10.1.jar"
+=======
+        "c:\\Users\\autologon\\Documents\\gson-2.10.1.jar"
+>>>>>>> c57dddced822cdcafc240b12a8523b6a2efbddb5
     ]
 }
