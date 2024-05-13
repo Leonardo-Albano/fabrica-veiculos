@@ -2,10 +2,11 @@ import java.util.concurrent.Semaphore;
 
 import ConexaoPackage.Servidor;
 import FabricaPackage.*;
+import LogPackage.Log;
 
 public class App {
     public static void main(String[] args) throws Exception {
-
+        Log.criarArquivo();
         
         Semaphore esteira_1_sem = new Semaphore(1);
         Esteira esteira_1 = new Esteira(esteira_1_sem);
@@ -31,11 +32,11 @@ public class App {
         Thread thread_esteira_4 = new Thread(esteira_4);
         
         
-        thread_servidor.start();
         thread_fabrica_1.start();
         thread_esteira_1.start();
         thread_esteira_2.start();
         thread_esteira_3.start();
         thread_esteira_4.start();
+        thread_servidor.start();
     }
 }

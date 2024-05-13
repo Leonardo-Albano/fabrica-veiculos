@@ -3,7 +3,6 @@ package ConexaoPackage;
 import java.io.*;
 import java.net.*;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 
 import Loja.Loja;
 import VeiculoPackage.Carro;

@@ -13,17 +13,13 @@ public class ContadorDeCarros{
     }
     
     public int getNum() throws InterruptedException {
-        // semaphore.acquire();
+        semaphore.acquire();
         int num = this.num;
-        // semaphore.release();
+        this.num++;
+        semaphore.release();
         
         return num;
     }
 
-    public void incrementarContador() throws InterruptedException {
-        semaphore.acquire();
-        this.num++;
-        semaphore.release();
-    }
 
 }

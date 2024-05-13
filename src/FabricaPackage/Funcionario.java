@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
+import LogPackage.Log;
 import VeiculoPackage.Carro;
 
 public class Funcionario {
@@ -49,7 +50,6 @@ public class Funcionario {
         int posicao_fabricacao = this.armazem_carros.size();
 
         Carro carro = new Carro(id_carro, cor_carro, tipo_veiculo, this.estacao_id, this.id, posicao_fabricacao);
-        carros_produzidos.incrementarContador();
         Random random = new Random();
         Thread.sleep(random.nextInt(10000 - 5000 + 1) + 5000);
 
@@ -59,7 +59,9 @@ public class Funcionario {
         this.armazem_carros_sem.acquire();
         this.armazem_carros.add(carro);
 
-        System.out.println("\n" + this.toString() + "\n" + "|\t\tProduziu!\t\t|\n" + carro.toString() + "\n");
+        Log.salvarLog("in.txt", carro.toString());
+        String mensagem = "\n" + this.toString() + "\n" + "|\t\tProduziu!\t\t|\n" + carro.toString() + "\n";
+        System.out.println(mensagem);
         
         return carro;
     }
