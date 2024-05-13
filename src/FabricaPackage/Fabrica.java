@@ -53,18 +53,10 @@ public class Fabrica implements Runnable{
         while(carro == null){
             if (!this.armazem_carros.isEmpty()) { 
                 carro = this.armazem_carros.remove(0);
-                System.out.println("\n\n|\t\tComprou!\t\t|\n" + carro.toString() + "\n\n");
                 this.armazem_carros_sem.release();
             }
         }
-        
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return carro;
-
     }
         
     private void produzir(Estacao estacao){
