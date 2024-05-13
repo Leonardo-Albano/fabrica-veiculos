@@ -2,8 +2,9 @@ package ConexaoPackage;
 
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.Semaphore;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 
 import Loja.Loja;
 import VeiculoPackage.Carro;
@@ -13,14 +14,16 @@ public class Conexao implements Runnable {
     private String ip;
     private Loja loja;
     private int porta;
+    private Semaphore semaphore;
 
-    public Conexao(String ip, int porta, Loja loja) {
+    public Conexao(String ip, int porta, Loja loja, Semaphore semaphore) {
         this.ip = ip;
         this.porta = porta;
         this.loja = loja;
+        this.semaphore = semaphore;
     }
 
-    public void Conectar(String enderecoServidor, int porta, Loja loja) {
+    public void Conectar(String enderecoServidor, int porta, Loja loja, Semaphore semaphore) {
         try {
             try (// Conexão com o servidor
                     Socket socket = new Socket(enderecoServidor, porta)) {
@@ -31,14 +34,14 @@ public class Conexao implements Runnable {
                 DataInputStream in = new DataInputStream(socket.getInputStream());
 
                 while (true) {
-                    out.writeUTF("Olá, servidor!");
+                    out.writeUTF(this.loja.id + ";" + (this.loja.max_carros_armazenados - this.loja.semaphore.availablePermits()));
                     System.out.print("\n enviado \n");
-                    this.loja.comprarVeiculo();
-
+                    
                     Gson gson = new Gson();
-                    Carro response = gson.fromJson(in.readUTF(), Carro.class);
-
-                    System.out.println(response.toString());
+                    Carro carro = gson.fromJson(in.readUTF(), Carro.class);
+                    
+                    this.loja.comprarVeiculo(this.semaphore, carro);
+                    System.out.println(carro.toString());
                     Thread.sleep(3000);
                 }
             }
@@ -49,6 +52,6 @@ public class Conexao implements Runnable {
 
     @Override
     public void run() {
-        this.Conectar(this.ip, this.porta, this.loja);
+        this.Conectar(this.ip, this.porta, this.loja, this.semaphore);
     }
 }
