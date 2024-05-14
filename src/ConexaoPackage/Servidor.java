@@ -4,6 +4,7 @@ import java.net.*;
 import com.google.gson.Gson;
 
 import FabricaPackage.Fabrica;
+import LogPackage.Log;
 import VeiculoPackage.Carro;
 
 import java.io.*;
@@ -29,13 +30,16 @@ public class Servidor implements Runnable {
                 if (dis.available() > 0) {
                     String mensagem = dis.readUTF();
                     System.out.println(mensagem);
+                    String idLoja = mensagem.split(";")[0];
+                    String posicaoEsteira = mensagem.split(";")[1];
 
                     if (mensagem.equals("exit")) {
                         break;
                     }
 
                     Carro carro = this.fabrica.venderVeiculo();
-                    String mensagemOUT = carro.toString() + "\n" + "a";
+                    String mensagemOUT = carro.toString() + "\n" + "Id da Loja" + idLoja + "Posição esteira: " + posicaoEsteira;
+                    Log.salvarLog("out.txt", mensagemOUT);
                     System.out.println("\n|\t" + cliente.getInetAddress().getHostAddress() + " Comprou!\t\t|\n" + carro.toString() + "\n");
                     
                     dos.writeUTF(gson.toJson(carro));

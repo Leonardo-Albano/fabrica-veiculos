@@ -11,7 +11,7 @@ public class Log {
     private static BufferedWriter bufferedWriterIn;
     private static BufferedWriter bufferedWriterOut;
 
-    public static void criarArquivo() {
+    public static void criarArquivos() {
         try {
             // Arquivo "in.txt"
             File fileIn = new File("in.txt");

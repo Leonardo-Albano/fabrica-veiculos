@@ -6,7 +6,7 @@ import LogPackage.Log;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Log.criarArquivo();
+        Log.criarArquivos();
         
         Semaphore esteira_1_sem = new Semaphore(1);
         Esteira esteira_1 = new Esteira(esteira_1_sem);

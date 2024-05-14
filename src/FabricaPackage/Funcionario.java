@@ -55,6 +55,8 @@ public class Funcionario {
 
         this.ferramenta_esquerda.release();
         this.ferramenta_direita.release();
+        // this.ferramenta_esquerda.notify();
+        // this.ferramenta_direita.notify();
 
         this.armazem_carros_sem.acquire();
         this.armazem_carros.add(carro);

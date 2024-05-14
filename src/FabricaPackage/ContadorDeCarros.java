@@ -17,6 +17,7 @@ public class ContadorDeCarros{
         int num = this.num;
         this.num++;
         semaphore.release();
+        // semaphore.notify();
         
         return num;
     }

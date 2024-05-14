@@ -19,6 +19,8 @@ public class Esteira implements Runnable{
                 Thread.sleep(1000);
                 int usedPermits = MAX_SOLICITACOES - this.esteira.availablePermits();
                 this.esteira.release(usedPermits);
+                // this.esteira.notify();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

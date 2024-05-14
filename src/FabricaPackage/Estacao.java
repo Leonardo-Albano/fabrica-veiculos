@@ -54,7 +54,7 @@ public class Estacao {
         Thread thread2 = new Thread(() -> {
             while (true) {
                 try {
-                    funcionario_2.produzir();
+                    this.funcionario_2.produzir();
                     Thread.sleep(1000); // Adjust sleep time as needed
                 } catch (InterruptedException e) {
                     e.printStackTrace();

@@ -54,6 +54,7 @@ public class Fabrica implements Runnable{
             if (!this.armazem_carros.isEmpty()) { 
                 carro = this.armazem_carros.remove(0);
                 this.armazem_carros_sem.release();
+                // this.armazem_carros_sem.notify();
             }
         }
         return carro;
