@@ -12,8 +12,8 @@ import VeiculoPackage.Carro;
 public class Conexao implements Runnable {
 
     private String ip;
-    private Loja loja;
     private int porta;
+    private Loja loja;
     private Semaphore semaphore;
 
     public Conexao(String ip, int porta, Loja loja, Semaphore semaphore) {
@@ -34,12 +34,12 @@ public class Conexao implements Runnable {
                 DataInputStream in = new DataInputStream(socket.getInputStream());
 
                 while (true) {
-                    out.writeUTF(this.loja.id + ";" + (this.loja.max_carros_armazenados - this.loja.semaphore.availablePermits()));
+                    out.writeUTF(this.loja.id + ";" + (this.loja.max_carros_armazenados - this.loja.semaphore.availablePermits()) *-1);
                     System.out.print("\n enviado \n");
                     
                     Gson gson = new Gson();
                     Carro carro = gson.fromJson(in.readUTF(), Carro.class);
-                    
+                    System.out.println("\n" + carro.toString());
                     this.loja.comprarVeiculo(this.semaphore, carro);
                     System.out.println(carro.toString());
                     Thread.sleep(3000);

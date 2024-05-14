@@ -11,11 +11,12 @@ public class Loja implements Runnable {
     public Semaphore semaphore;
     private Carro carro;
     public ArrayList<Carro> carros;
-    public int max_carros_armazenados; 
+    public int max_carros_armazenados;
 
     public Loja(Semaphore semaphore, int id, int max_carros_armazenados) {
         this.id = id;
         this.semaphore = semaphore;
+        this.carros = new ArrayList<Carro>();
         this.max_carros_armazenados = max_carros_armazenados;
     }
 
@@ -25,8 +26,10 @@ public class Loja implements Runnable {
     }
 
     public void venderVeiculo(Semaphore semaphore, int quantCarros) throws InterruptedException {
-        this.semaphore.release(quantCarros);
-        this.carros.subList(0, quantCarros);
+        if (quantCarros <= this.carros.size()) {
+            this.semaphore.release(quantCarros);
+            this.carros.subList(0, quantCarros);
+        }
     }
 
     @Override
